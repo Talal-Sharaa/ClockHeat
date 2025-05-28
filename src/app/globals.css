@@ -1,0 +1,133 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  :root {
+    /* Default Theme: Vibrant Purple (these will be overridden by ThemeProvider if custom palette is set for primary/accent) */
+    /* Background, Foreground, Card for light mode are set by ThemeProvider from the palette */
+    /* If ThemeProvider doesn't set them (e.g. on initial load before hydration), these are fallbacks */
+    --background: 220 13% 94.1%; /* #F0F2F5 Light Gray */
+    --foreground: 240 10% 3.9%; /* Dark Gray for text */
+    --card: 0 0% 100%; /* White */
+
+    --card-foreground: 240 10% 3.9%;
+
+    --popover: 0 0% 100%; /* White */
+    --popover-foreground: 240 10% 3.9%;
+
+    /* Primary and Accent are set by ThemeProvider from the palette */
+    --primary: 277 58% 66%; /* #A06CD5 Vibrant Purple - Fallback */
+    --primary-foreground: 277 80% 98%; /* Light color for text on primary */
+    /* HSL components for primary, to be set by ThemeProvider */
+    --primary-h: 277;
+    --primary-s: 58%;
+    --primary-l: 66%;
+
+    --accent: 203 60% 64%; /* #6FB3D8 Soft Blue - Fallback */
+    --accent-foreground: 203 80% 98%; /* Light color for text on accent */
+     /* HSL components for accent, to be set by ThemeProvider if needed elsewhere */
+    --accent-h: 203;
+    --accent-s: 60%;
+    --accent-l: 64%;
+
+    --secondary: 240 4.8% 95.9%; /* Default ShadCN Light Gray */
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: var(--primary); /* Use primary HSL string directly for ring to ensure it updates with theme */
+
+    --radius: 0.5rem;
+
+    /* Chart colors now use HSL components of primary/accent for dynamic theming */
+    --chart-1: hsl(var(--primary-h) var(--primary-s) var(--primary-l));
+    --chart-2: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+    --chart-3: hsl(var(--primary-h) var(--primary-s) calc(var(--primary-l) - 10%)); /* Darker Primary */
+    --chart-4: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) - 10%));   /* Darker Accent */
+    --chart-5: hsl(calc(var(--primary-h) - 17) var(--primary-s) var(--primary-l)); /* Analogous color to primary */
+
+
+    /* Sidebar specific - these might need to be adjusted if main background/foreground changes drastically */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark mode: Background, Foreground, Card are fixed here and should override ThemeProvider's light mode versions for these specific variables. */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    /* Primary and Accent (and their HSL components) are inherited from :root (set by ThemeProvider) */
+    /* Their foregrounds might need adjustment if a chosen primary/accent is very light, but default should be fine */
+    --primary-foreground: 0 0% 98%; /* Ensure text on primary buttons is light in dark mode */
+    --accent-foreground: 0 0% 98%;  /* Ensure text on accent buttons is light in dark mode */
+    
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    /* --ring will use the themed primary color (hsl(var(--primary-h) var(--primary-s) var(--primary-l))) */
+
+    /* Chart colors in dark mode - derive from the themed primary/accent HSL components */
+    /* --chart-1, --chart-2, --chart-3, --chart-4, --chart-5 already use HSL components set by ThemeProvider */
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%; /* Example of specific dark mode sidebar primary */
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Ensure ring color updates with theme by using the HSL components */
+:root {
+  --ring: hsl(var(--primary-h) var(--primary-s) var(--primary-l));
+}
+.dark {
+  --ring: hsl(var(--primary-h) var(--primary-s) var(--primary-l));
+}
+
